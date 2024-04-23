@@ -36,7 +36,13 @@ to
 and replace "export_model_config" as "export_tensorrt_llm_checkpoint",
 and delete the line of "export_tensorrt_llm_config=(not export_npz),"
 ```
-By the way, dataset of "cnn_dailymail" could also be downloaded from "https://gitee.com/hf-datasets/cnn_dailymail/tree/main". And we should modify "_DL_URLS" in "cnn_dailymail.py" with proper http links or local paths.
+By the way, dataset of "cnn_dailymail" could also be downloaded from "https://gitee.com/hf-datasets/cnn_dailymail/tree/main". And we should modify "_DL_URLS" in "cnn_dailymail.py" with proper http links or local paths. Then, modify the line 199 as below:
+```
+from
+    dataset = load_dataset("cnn_dailymail", name="3.0.0", split="train")
+to
+    dataset = load_dataset("/path_to/cnn_dailymail/cnn_dailymail.py", name="3.0.0", split="train")
+```
 ## Build the engine
 
 - Need to prepare the HF Qwen checkpoint by following the guides here Qwen-7B-Chat
