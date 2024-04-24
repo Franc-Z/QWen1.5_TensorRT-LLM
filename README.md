@@ -36,7 +36,18 @@ to
 and replace "export_model_config" as "export_tensorrt_llm_checkpoint",
 and delete the line of "export_tensorrt_llm_config=(not export_npz),"
 ```
-By the way, dataset of "cnn_dailymail" could also be downloaded from "https://gitee.com/hf-datasets/cnn_dailymail/tree/main". And we should modify "_DL_URLS" in "cnn_dailymail.py" with proper http links or local paths. Then, modify the line 199 as below:
+By the way, dataset of "cnn_dailymail" could also be downloaded from "https://gitee.com/hf-datasets/cnn_dailymail/tree/main". And we should modify "_DL_URLS" in "cnn_dailymail.py" with proper http links or local paths like below:
+```
+_DL_URLS = {
+    "cnn_stories": "/path_to/cnn_dailymail/data/cnn_stories.tgz",
+    "dm_stories": "/path_to/cnn_dailymail/data/dailymail_stories.tgz",
+    "train": "https://raw.githubusercontent.com/abisee/cnn-dailymail/master/url_lists/all_train.txt",
+    "validation": "https://raw.githubusercontent.com/abisee/cnn-dailymail/master/url_lists/all_val.txt",
+    "test": "https://raw.githubusercontent.com/abisee/cnn-dailymail/master/url_lists/all_test.txt",
+}
+```
+
+Then, modify the line 199 as below:
 ```
 from
     dataset = load_dataset("cnn_dailymail", name="3.0.0", split="train")
