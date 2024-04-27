@@ -55,9 +55,9 @@ python /Qwen2-7B/For0.8.0/build.py --model_dir /Qwen2-7B/ \
                 --remove_input_padding \
                 --use_gpt_attention_plugin float16 \
                 --use_gemm_plugin float16 \
-				--world_size 1	\
-				--tp_size 1	\
-				--pp_size 1 \
+		--world_size 1	\
+		--tp_size 1	\
+		--pp_size 1 \
                 --output_dir /Qwen2-7B/trt_engines/float16/1-gpu/
 
 
@@ -68,38 +68,38 @@ python /Qwen2-7B/For0.8.0/build.py --model_dir /Qwen2-7B/ \
                 --remove_input_padding \
                 --use_gpt_attention_plugin float16 \
                 --use_gemm_plugin float16 \
-				--world_size 4	\
-				--tp_size 4	\
-				--pp_size 1 \
+		--world_size 4	\
+		--tp_size 4	\
+		--pp_size 1 \
                 --output_dir /Qwen2-7B/trt_engines/float16/4-gpu/
 ```
 ## Run the engines
 - To run the engine with TP=1
 ```
-python /app/tensorrt_llm/examples/run.py    --tokenizer_dir /Qwen2-7B \
-                                            --engine_dir /Qwen2-7B/trt_engines/float16/1-gpu/ \
-                                            --max_output_len 50 \
-					--input_text "中国的首都是哪个城市？"
+python /app/tensorrt_llm/examples/run.py    	--tokenizer_dir /Qwen2-7B \
+                                            	--engine_dir /Qwen2-7B/trt_engines/float16/1-gpu/ \
+                                            	--max_output_len 50 \
+						--input_text "中国的首都是哪个城市？"
 ```
 
 - To run the engine with TP=4
 ```
 mpirun -n 4 --allow-run-as-root \
-python /app/tensorrt_llm/examples/run.py    --tokenizer_dir /Qwen2-7B \
-                                            --engine_dir /Qwen2-7B/trt_engines/float16/4-gpu/ \
-                                            --max_output_len 50 \
-											--input_text "中国的首都是哪个城市？"
+python /app/tensorrt_llm/examples/run.py    	--tokenizer_dir /Qwen2-7B \
+                                            	--engine_dir /Qwen2-7B/trt_engines/float16/4-gpu/ \
+                                            	--max_output_len 50 \
+						--input_text "中国的首都是哪个城市？"
 ```
 
 ## INT4-WO-AWQ
 
 #Quantize the HF model
 ```
-python /app/tensorrt_llm/examples/quantize.py --model_dir /Qwen2-7B \
-                                    --dtype float16 \
-                                    --qformat int4_awq \                                    
-                                    --calib_size 32   \
-                                    --output_dir /Qwen2-7B/For0.8.0/exported_model.pt
+python /app/tensorrt_llm/examples/quantize.py 	--model_dir /Qwen2-7B \
+                                    		--dtype float16 \
+                                    		--qformat int4_awq \                                    
+                                    		--calib_size 32   \
+						--output_dir /Qwen2-7B/For0.8.0/exported_model.pt
 ```
 #Building the engine with quantized checkpoint
 ```
@@ -119,10 +119,10 @@ python build.py --model_dir /Qwen2-7B \
 ```
 #run the engine
 ```
-python /app/tensorrt_llm/examples/run.py    --tokenizer_dir /Qwen2-7B \
-                                            --engine_dir /Qwen2-7B/For0.8.0/trt_engines/int4-awq/1-gpu \
-                                            --max_output_len 50 \
-											--input_text "中国的首都是哪里？"
+python /app/tensorrt_llm/examples/run.py    	--tokenizer_dir /Qwen2-7B \
+                                            	--engine_dir /Qwen2-7B/For0.8.0/trt_engines/int4-awq/1-gpu \
+                                            	--max_output_len 50 \
+						--input_text "中国的首都是哪里？"
 ```
 
 ## Check the accuracy of the optimized engine
