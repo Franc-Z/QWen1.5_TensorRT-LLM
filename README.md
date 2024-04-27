@@ -44,12 +44,12 @@ TensorRT-LLM builds TensorRT engine(s) from HF checkpoint. If no checkpoint dire
 Normally trtllm-build only requires single GPU, but if you've already got all the GPUs needed while inferencing, you could enable parallelly building to make the engine building process faster by adding --workers argument. Please note that currently workers feature only supports single node.
 Here're some examples:
 
-
+```
 # Build a single-GPU float16 engine from HF weights.
 # Try use_gemm_plugin to prevent accuracy issue.
 
 # Build the Qwen-7B-Chat model using a single GPU and FP16.
-```
+
 python /Qwen2-7B/For0.8.0/build.py --model_dir /Qwen2-7B/ \
                 --dtype float16 \
                 --remove_input_padding \
@@ -59,9 +59,10 @@ python /Qwen2-7B/For0.8.0/build.py --model_dir /Qwen2-7B/ \
 				--tp_size 1	\
 				--pp_size 1 \
                 --output_dir /Qwen2-7B/trt_engines/float16/1-gpu/
-```
+
+
 # Build the Qwen-7B-Chat model using 4 GPUs and FP16.
-```
+
 python /Qwen2-7B/For0.8.0/build.py --model_dir /Qwen2-7B/ \
                 --dtype float16 \
                 --remove_input_padding \
