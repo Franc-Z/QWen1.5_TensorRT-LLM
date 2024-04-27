@@ -71,7 +71,7 @@ class QWenDecoderLayer(Module):
 
 
         self.attention = Attention(
-            local_layer_idx=local_layer_idx,
+            #local_layer_idx=local_layer_idx,
             hidden_size=config.hidden_size,
             num_attention_heads=config.num_attention_heads,
             num_kv_heads=config.num_key_value_heads,       
@@ -177,8 +177,8 @@ class QWenModel(Module):
                                 dtype=config.dtype)
 
     def forward(self,
-                input_ids: Tensor,
-                position_ids=None,
+                input_ids: Tensor=None,
+                position_ids: Tensor=None,
                 use_cache=True,
                 attention_mask=None,
                 kv_cache_params=None,
@@ -188,7 +188,7 @@ class QWenModel(Module):
                 prompt_tasks: Optional[Tensor]=None,
                 prompt_vocab_size: Optional[Tensor] = None):
 
-        kv_cache_params.fill_none_tensor_list(len(self.layers))
+        #kv_cache_params.fill_none_tensor_list(len(self.layers))
        
         if use_cache:
             presents = []
@@ -198,7 +198,8 @@ class QWenModel(Module):
         ] if prompt_embedding_table is not None else []
 
         if self.mapping.is_first_pp_rank():
-            hidden_states = self.vocab_embedding(input_ids, *ptuning_args)
+            print('here is',type(input_ids))
+            hidden_states = self.vocab_embedding(input_ids,*ptuning_args)            
         else:
             hidden_states = recv(hidden_states, self.mapping.prev_pp_rank())
 
