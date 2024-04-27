@@ -19,7 +19,7 @@ from typing import Optional
 
 from transformers import AutoTokenizer, T5Tokenizer
 
-from tensorrt_llm.builder import get_engine_version
+#from tensorrt_llm.builder import get_engine_version
 
 # TODO(enweiz): Update for refactored models
 DEFAULT_HF_MODEL_DIRS = {
@@ -47,7 +47,7 @@ DEFAULT_PROMPT_TEMPLATES = {
 
 
 def read_model_name(engine_dir: str):
-    engine_version = get_engine_version(engine_dir)
+    engine_version = None #get_engine_version(engine_dir)
 
     with open(Path(engine_dir) / "config.json", 'r') as f:
         config = json.load(f)
@@ -106,13 +106,10 @@ def load_tokenizer(tokenizer_dir: Optional[str] = None,
     if model_name == 'QWenForCausalLM':
         with open(Path(tokenizer_dir) / "generation_config.json") as f:
             gen_config = json.load(f)
-        if hasattr(gen_config,"chat_format"):
-            chat_format = gen_config['chat_format']
-        else:
-            chat_format = "chatml"
+        chat_format = gen_config['chat_format']
         if chat_format == 'raw' or chat_format == 'chatml':
             pad_id = gen_config['pad_token_id']
-            end_id = gen_config['eos_token_id'][0]
+            end_id = gen_config['eos_token_id']
         else:
             raise Exception(f"unknown chat format: {chat_format}")
     elif model_name == 'ChatGLMForCausalLM' and model_version == 'glm':
