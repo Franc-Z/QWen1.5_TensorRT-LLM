@@ -95,7 +95,7 @@ python /app/tensorrt_llm/examples/run.py    	--tokenizer_dir /Qwen2-7B \
 
 #Quantize the HF model
 ```
-python /app/tensorrt_llm/examples/quantize.py 	--model_dir /Qwen2-7B \
+python /app/tensorrt_llm/examples/quantization/quantize.py 	--model_dir /Qwen2-7B \
 						--batch_size 1 \
                                     		--dtype float16 \
                                     		--qformat int4_awq \                                    
