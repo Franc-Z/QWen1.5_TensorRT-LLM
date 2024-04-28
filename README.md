@@ -96,14 +96,18 @@ python /app/tensorrt_llm/examples/run.py    	--tokenizer_dir /Qwen2-7B \
 #Quantize the HF model
 ```
 python /app/tensorrt_llm/examples/quantize.py 	--model_dir /Qwen2-7B \
+						--batch_size 1 \
                                     		--dtype float16 \
                                     		--qformat int4_awq \                                    
                                     		--calib_size 32   \
+						--tp_size 1	\
+						--pp_size 1	\
 						--output_dir /Qwen2-7B/For0.8.0/exported_model.pt
 ```
 #Building the engine with quantized checkpoint
 ```
 python build.py --model_dir /Qwen2-7B \
+		--max_batch_size 1 \
                 --quant_ckpt_path /Qwen2-7B/For0.8.0/exported_model.pt \
                 --dtype float16 \
                 --remove_input_padding \
