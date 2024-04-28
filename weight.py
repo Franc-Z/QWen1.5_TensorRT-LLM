@@ -27,7 +27,7 @@ from tqdm import tqdm
 import torch
 #import torch.ops.trtllm.symmetric_quantize_last_axis_of_batched_matrix
 import tensorrt_llm
-from tensorrt_llm._utils import (str_dtype_to_np, str_dtype_to_torch,numpy_to_torch,torch_to_numpy)
+from tensorrt_llm._utils import (str_dtype_to_torch,numpy_to_torch,torch_to_numpy)
 from tensorrt_llm.mapping import Mapping
 from model import QWenForCausalLM
 from tensorrt_llm.quantization import QuantMode
@@ -274,7 +274,7 @@ def load_from_hf_qwen2(tensorrt_llm_qwen2: QWenForCausalLM,
     return 
 
 #------------------------------------------------------------------------------------------------------------
-def load_from_awq_qwen(tensorrt_llm_qwen2: QWenForCausalLM,
+def load_from_awq_qwen( tensorrt_llm_qwen2: QWenForCausalLM,
                         quant_ckpt_path,
                         quantize_lm_head=False,
                         mapping=Mapping(),
@@ -514,12 +514,10 @@ def load_from_awq_qwen(tensorrt_llm_qwen2: QWenForCausalLM,
             x_bias = load(prefix + f"self_attn.{x}_proj.bias")
             x_bias = torch_split(x_bias, dim=0)
             qkv_bias_list.append(x_bias)        
-        qkv_bias = torch.cat(qkv_bias_list, dim=0)
+        qkv_bias = torch.cat(qkv_bias_list, dim=0).to(torch_dtype).detach().cpu().numpy()
         split_v = split(qkv_bias, mapping.tp_size, mapping.rank, dim=1)
         split_v = split_v.reshape(3 * ((qkv_bias.shape[0]//3)// mapping.tp_size))
-        layer.attention.qkv.bias.value = np.ascontiguousarray(
-            qkv_bias.to(torch_dtype).cpu().numpy()
-        )
+        layer.attention.qkv.bias.value = np.ascontiguousarray(qkv_bias)
 
         # 4.2 attention.dense
         v = [load(prefix + awq_key_list[5] + suf) for suf in awq_suffix_list]
