@@ -133,6 +133,19 @@ python /Qwen2-7B/For0.8.0/summarize.py  --test_trt_llm        \
                                         --data_type fp16 \
                                         --engine_dir /Qwen2-7B/trt_engines/float16/1-gpu/  \
                                         --check_accuracy
-
-
+```
+### INT4-WO
+```
+# Build the engine of INT4-weight-only with TP=4
+python /Qwen2-7B/For0.8.0/build.py --model_dir /Qwen2-7B \
+                --dtype float16 \
+                --remove_input_padding \
+                --use_gpt_attention_plugin float16 \
+                --use_gemm_plugin float16 \
+		--use_weight_only \
+		--weight_only_precision int4	\
+		--world_size 4	\
+		--tp_size 4	\
+		--pp_size 1 \
+                --output_dir /Qwen2-7B/trt_engines/int4-wo/4-gpu/
 ```
