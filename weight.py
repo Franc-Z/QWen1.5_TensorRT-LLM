@@ -70,11 +70,11 @@ def dup_kv_weight(v, num_head, tp_size):
 def load_from_hf_qwen2(tensorrt_llm_qwen2: QWenForCausalLM,
                       hf_qwen,
                       mapping=Mapping(),
-                      max_position_embeddings=32768,
-                      rotary_emb_base=10000,
-                      kv_channels=128,
+                      #max_position_embeddings=32768,
+                      #rotary_emb_base=10000,
+                      #kv_channels=128,
                       dtype="float16",
-                      multi_query_mode=False,
+                      #multi_query_mode=False,
                       #use_gemm_woq_plugin=False
                       ):
     tensorrt_llm.logger.info('Loading weights from HF QWen...')
@@ -178,8 +178,7 @@ def load_from_hf_qwen2(tensorrt_llm_qwen2: QWenForCausalLM,
                     scales.value = torch_weight_scales.numpy()
                 else:
                     dst.value = split_v
-                    #split(qkv_bias, mapping.tp_size, mapping.rank, dim=1)
-
+                    
                 # bias
                 dst = tensorrt_llm_qwen2.transformer.layers[idx].attention.qkv.bias
                 if not mha_mode:
@@ -200,7 +199,6 @@ def load_from_hf_qwen2(tensorrt_llm_qwen2: QWenForCausalLM,
                 dst.value = split_v
 
             elif tllm_prex+'self_attn.o_proj.weight' in k:
-                # dst = tensorrt_llm_qwen2.layers[idx].self_attn.dense.weight
                 split_v = split(v, mapping.tp_size, mapping.tp_rank, dim=1)
                 
                 if use_weight_only:
@@ -275,7 +273,7 @@ def load_from_hf_qwen2(tensorrt_llm_qwen2: QWenForCausalLM,
 
     return 
 
-
+#------------------------------------------------------------------------------------------------------------
 def load_from_awq_qwen(tensorrt_llm_qwen2: QWenForCausalLM,
                         quant_ckpt_path,
                         quantize_lm_head=False,
@@ -283,12 +281,12 @@ def load_from_awq_qwen(tensorrt_llm_qwen2: QWenForCausalLM,
                         dtype="float16",
                         ft_model_dir=None):
     tensorrt_llm.logger.info(
-        'Loading weights from groupwise AWQ LLaMA checkpoint...')
+        'Loading weights from groupwise QWen1.5 checkpoint...')
     tik = time.time()
 
     if quant_ckpt_path.endswith(".pt"):
-        awq_llama = torch.load(quant_ckpt_path)
-        print(awq_llama)
+        awq_qwen = torch.load(quant_ckpt_path)
+        
         awq_prefix = "model."
         awq_suffix_list = [
             ".weight",
@@ -313,11 +311,11 @@ def load_from_awq_qwen(tensorrt_llm_qwen2: QWenForCausalLM,
         def load(key):
             if "lm_head" in key:
                 print(key)
-                v = awq_llama[key]
+                v = awq_qwen[key]
             else:
                 print(awq_prefix)
                 print(key)
-                v = awq_llama[awq_prefix + key]
+                v = awq_qwen[awq_prefix + key]
             return v
 
         group_size = load("layers.0.self_attn.o_proj.weight").numel() // load(
