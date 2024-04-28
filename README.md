@@ -19,7 +19,7 @@ pip3 install --upgrade transformers
 
 To use this code, please put the all the "*.py" files into a same folder (we assume this folder named as "For0.8.0").
 
-By the way, dataset of "cnn_dailymail" could also be downloaded from "[https://gitee.com/hf-datasets/cnn_dailymail/tree/main](https://gitee.com/hf-datasets/cnn_dailymail/tree/script/)". And we should modify "_DL_URLS" in "cnn_dailymail.py" with proper http links or local paths like below:
+By the way, dataset of "cnn_dailymail" could also be downloaded from "[https://gitee.com/hf-datasets/cnn_dailymail/tree/script/](https://gitee.com/hf-datasets/cnn_dailymail/tree/script/)". And we should modify "_DL_URLS" in "cnn_dailymail.py" with proper http links or local paths like below:
 ```
 _DL_URLS = {
     "cnn_stories": "/path_to/cnn_dailymail/data/cnn_stories.tgz",
