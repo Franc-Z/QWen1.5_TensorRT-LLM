@@ -37,7 +37,7 @@ from
 to
     dataset = load_dataset("/path_to/cnn_dailymail/cnn_dailymail.py", name="3.0.0", split="train")
 ```
-## Build the engine
+### Build the FP16 engine
 
 - Need to prepare the HF Qwen checkpoint by following the guides here Qwen-7B-Chat
 TensorRT-LLM builds TensorRT engine(s) from HF checkpoint. If no checkpoint directory is specified, TensorRT-LLM will build engine(s) with dummy weights.
@@ -73,7 +73,7 @@ python /Qwen2-7B/For0.8.0/build.py --model_dir /Qwen2-7B/ \
 		--pp_size 1 \
                 --output_dir /Qwen2-7B/trt_engines/float16/4-gpu/
 ```
-## Run the engines
+#### Run the engines
 - To run the engine with TP=1
 ```
 python /app/tensorrt_llm/examples/run.py    	--tokenizer_dir /Qwen2-7B \
@@ -91,7 +91,7 @@ python /app/tensorrt_llm/examples/run.py    	--tokenizer_dir /Qwen2-7B \
 						--input_text "中国的首都是哪个城市？"
 ```
 
-## INT4-WO-AWQ
+### INT4-WO-AWQ
 
 #Quantize the HF model
 ```
@@ -125,7 +125,7 @@ python /app/tensorrt_llm/examples/run.py    	--tokenizer_dir /Qwen2-7B \
 						--input_text "中国的首都是哪里？"
 ```
 
-## Check the accuracy of the optimized engine
+#### Check the accuracy of the optimized engine
 ```
 python /Qwen2-7B/For0.8.0/summarize.py  --test_trt_llm        \
                                         --test_hf        \
