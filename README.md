@@ -36,7 +36,7 @@ to
 and replace "export_model_config" as "export_tensorrt_llm_checkpoint",
 and delete the line of "export_tensorrt_llm_config=(not export_npz),"
 ```
-By the way, dataset of "cnn_dailymail" could also be downloaded from "https://gitee.com/hf-datasets/cnn_dailymail/tree/main". And we should modify "_DL_URLS" in "cnn_dailymail.py" with proper http links or local paths like below:
+By the way, dataset of "cnn_dailymail" could also be downloaded from "https://gitee.com/hf-datasets/cnn_dailymail/tree/script/". And we should modify "_DL_URLS" in "cnn_dailymail.py" with proper http links or local paths like below:
 ```
 _DL_URLS = {
     "cnn_stories": "/path_to/cnn_dailymail/data/cnn_stories.tgz",
