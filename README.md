@@ -30,7 +30,7 @@ _DL_URLS = {
 }
 ```
 
-Then, modify the line 199 as below:
+Then, modify the line 187 of "/app/tensorrt_llm/examples/quantization/quantize.py" as below:
 ```
 from
     dataset = load_dataset("cnn_dailymail", name="3.0.0", split="train")
