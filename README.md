@@ -52,6 +52,8 @@ Here're some examples:
 
 python /Qwen2-7B/For0.8.0/build.py --model_dir /Qwen2-7B/ \
                 --dtype float16 \
+		--enable_context_fmha \
+		--max_batch_size 1  \
                 --remove_input_padding \
                 --use_gpt_attention_plugin float16 \
                 --use_gemm_plugin float16 \
@@ -65,6 +67,8 @@ python /Qwen2-7B/For0.8.0/build.py --model_dir /Qwen2-7B/ \
 
 python /Qwen2-7B/For0.8.0/build.py --model_dir /Qwen2-7B/ \
                 --dtype float16 \
+		--enable_context_fmha \
+		--max_batch_size 1  \
                 --remove_input_padding \
                 --use_gpt_attention_plugin float16 \
                 --use_gemm_plugin float16 \
