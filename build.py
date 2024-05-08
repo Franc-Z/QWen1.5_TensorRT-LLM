@@ -771,7 +771,7 @@ def get_my_config(args):
         quant_mode=args.quant_mode,
         quant_kwargs=quant_kwargs,
         use_prompt_tuning = False,
-        use_parallel_embedding = False,
+        use_parallel_embedding = args.use_parallel_embedding,
         embedding_sharding_dim = 0,
         share_embedding_table = False,
         max_lora_rank = 64,
