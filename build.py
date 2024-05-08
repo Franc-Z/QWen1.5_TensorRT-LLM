@@ -772,7 +772,7 @@ def get_my_config(args):
         quant_kwargs=quant_kwargs,
         use_prompt_tuning = False,
         use_parallel_embedding = args.use_parallel_embedding,
-        embedding_sharding_dim = 0,
+        embedding_sharding_dim = args.embedding_sharding_dim,
         share_embedding_table = False,
         max_lora_rank = 64,
         head_size = None,
