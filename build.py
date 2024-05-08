@@ -564,7 +564,8 @@ def get_model_object(args, mapping, trt_dtype=None):
                           hf_qwen,
                           mapping,
                           dtype=args.dtype,
-                          multi_query_mode=(args.n_kv_head != args.n_head))
+                          #multi_query_mode=(args.n_kv_head != args.n_head)
+                          )
         del hf_qwen
     elif args.bin_model_dir is not None:
         logger.info(f'Loading QWen ... from {args.bin_model_dir}')
@@ -769,6 +770,12 @@ def get_my_config(args):
         pp_size=args.pp_size,        
         quant_mode=args.quant_mode,
         quant_kwargs=quant_kwargs,
+        use_prompt_tuning = False,
+        use_parallel_embedding = False,
+        embedding_sharding_dim = 0,
+        share_embedding_table = False,
+        max_lora_rank = 64,
+        head_size = None,
     )
     return config
 
