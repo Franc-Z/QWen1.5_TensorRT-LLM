@@ -461,8 +461,8 @@ def parse_arguments():
         args.n_layer = hf_config.num_hidden_layers
         args.n_positions = hf_config.max_position_embeddings
         args.vocab_size = hf_config.vocab_size
-        args.hidden_act = "silu"
-        args.rms_norm_eps = 1e-6                #hf_config.layer_norm_epsilon
+        args.hidden_act = hf_config.hidden_act
+        args.rms_norm_eps = hf_config.rms_norm_eps
         #args.kv_channels = hf_config.kv_channels
         args.rotary_base = hf_config.rope_theta
     if args.n_kv_head is None:
