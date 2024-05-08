@@ -108,7 +108,7 @@ class QWenDecoderLayer(Module):
         self,
         hidden_states: Tensor,
         attention_mask = None,
-        use_cache=True,
+        use_cache=False,
         kv_cache_params=None,
         attention_params=None,
     ):
@@ -179,7 +179,7 @@ class QWenModel(Module):
     def forward(self,
                 input_ids: Tensor=None,
                 position_ids: Tensor=None,
-                use_cache=True,
+                use_cache=False,
                 attention_mask=None,
                 kv_cache_params=None,
                 attention_params=None,
