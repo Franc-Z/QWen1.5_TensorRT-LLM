@@ -166,11 +166,11 @@ def parse_arguments():
     parser.add_argument('--inter_size', type=int, default=11008)
     parser.add_argument('--hidden_act', type=str, default='silu')
     parser.add_argument('--rms_norm_eps', type=float, default=1e-06)
-    parser.add_argument('--max_batch_size', type=int, default=2)
+    parser.add_argument('--max_batch_size', type=int, default=1)
     parser.add_argument('--max_input_len', type=int, default=2048)
     parser.add_argument('--max_output_len', type=int, default=2048)
     parser.add_argument('--max_beam_width', type=int, default=1)
-    parser.add_argument('--rotary_base', type=float, default=10000.0)
+    parser.add_argument('--rotary_base', type=float, default=1000000.0)
     parser.add_argument('--rotary_scaling', nargs=2, type=str, default=None)
     parser.add_argument('--use_gpt_attention_plugin',
                         nargs='?',
