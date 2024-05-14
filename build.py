@@ -774,7 +774,7 @@ def get_my_config(args):
         use_parallel_embedding = args.use_parallel_embedding,
         embedding_sharding_dim = args.embedding_sharding_dim,
         share_embedding_table = False,
-        max_lora_rank = 64,
+        max_lora_rank = None,
         head_size = None,
     )
     return config
